@@ -1195,6 +1195,8 @@ project(':core') {
     from(project(':streams:examples').configurations.runtimeClasspath) { into("libs/") }
     from(project(':tools:tools-api').jar) { into("libs/") }
     from(project(':tools:tools-api').configurations.runtimeClasspath) { into("libs/") }
+    from(project(':plugins').jar) { into("libs/") }
+    from(project(':plugins').configurations.runtimeClasspath) { into("libs/") }
     duplicatesStrategy 'exclude'
   }
 
@@ -3075,6 +3077,26 @@ project(':log4j-appender') {
     enabled = false
   }
 
+}
+
+project(':plugins') {
+  archivesBaseName = "kafka-cloudera-plugins"
+
+  dependencies {
+    implementation project(':clients')
+    implementation libs.shiro
+    implementation libs.libpam4j
+    implementation libs.jna
+    implementation libs.slf4jApi
+
+    testImplementation libs.junitJupiter
+    testImplementation libs.apachedsTestFramework
+    testImplementation project(':clients').sourceSets.test.output
+  }
+
+  javadoc {
+    enabled = false
+  }
 }
 
 project(':connect:api') {
