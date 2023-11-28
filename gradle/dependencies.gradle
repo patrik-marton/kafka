@@ -247,6 +247,7 @@ libs += [
   dropwizardMetrics: "io.dropwizard.metrics:metrics-core:$versions.dropwizardMetrics",
   mockitoCore: "org.mockito:$mockitoArtifactName:$mockitoVersion",
   mockitoJunitJupiter: "org.mockito:mockito-junit-jupiter:$mockitoVersion",
+  nettyAll: "io.netty:netty-all:$versions.netty",
   nettyHandler: "io.netty:netty-handler:$versions.netty",
   nettyTransportNativeEpoll: "io.netty:netty-transport-native-epoll:$versions.netty",
   pcollections: "org.pcollections:pcollections:$versions.pcollections",
