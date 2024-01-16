@@ -383,7 +383,7 @@ subprojects {
           }
 
           afterEvaluate {
-            ["srcJar", "javadocJar", "scaladocJar", "testJar", "testSrcJar"].forEach { taskName ->
+            ["srcJar", "javadocJar", "scaladocJar", "testJar", "testSrcJar", "releaseTarGz"].forEach { taskName ->
               def task = tasks.findByName(taskName)
               if (task != null)
                 artifact task
