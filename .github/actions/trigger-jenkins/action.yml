@@ -1,0 +1,34 @@
+name: "Trigger Jenkins"
+description: "Start Jenkins jobs and report build status"
+author: "David Simon"
+inputs:
+  url:
+    description: "Jenkins API URL"
+    required: true
+  job:
+    description: "Job Name"
+    required: true
+  username:
+    description: "Jenkins Username"
+    required: true
+  token:
+    description: "Jenkins API Token"
+    required: true
+  parameters:
+    description: 'Build Parameters as JSON'
+    required: false
+  timeout:
+    description: "Build Timeout in Minutes"
+    required: true
+  poll_interval:
+    description: "Build Status Poll Interval in Seconds"
+    required: true
+  github_token:
+    description: "Github API token"
+    required: true
+  pr:
+    description: "Pull Request number. Used by action to leave comments"
+    required: true
+runs:
+  using: "docker"
+  image: Dockerfile
