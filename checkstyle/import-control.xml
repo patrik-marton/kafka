@@ -1,6 +1,6 @@
 <!DOCTYPE import-control PUBLIC
-"-//Puppy Crawl//DTD Import Control 1.1//EN"
-"http://www.puppycrawl.com/dtds/import_control_1_1.dtd">
+"-//Puppy Crawl//DTD Import Control 1.4//EN"
+"http://www.puppycrawl.com/dtds/import_control_1_4.dtd">
 <!--
  Licensed to the Apache Software Foundation (ASF) under one or more
  contributor license agreements.  See the NOTICE file distributed with
@@ -18,7 +18,7 @@
  limitations under the License.
 -->
 
-<import-control pkg="org.apache.kafka">
+<import-control pkg="org.apache.kafka|com.cloudera.dim.kafka" regex="true">
 
   <!-- THINK HARD ABOUT THE LAYERING OF THE PROJECT BEFORE CHANGING THIS FILE -->
 
@@ -666,6 +666,10 @@
       <allow class="org.apache.kafka.connect.sink.SinkRecord" />
       <allow pkg="org.apache.kafka.connect.transforms.util" />
       <allow pkg="org.apache.kafka.connect.transforms.field" />
+      <allow pkg="org.apache.kafka.connect.transforms" />
+      <allow pkg="com.cloudera.dim.kafka.connect.transforms" />
+      <allow pkg="org.apache.kafka.connect.storage" />
+      <allow pkg="com.cloudera.dim.kafka.connect.storage" />
     </subpackage>
   </subpackage>
 

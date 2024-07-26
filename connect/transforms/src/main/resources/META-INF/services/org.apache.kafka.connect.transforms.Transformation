@@ -39,3 +39,7 @@ org.apache.kafka.connect.transforms.TimestampConverter$Key
 org.apache.kafka.connect.transforms.TimestampConverter$Value
 org.apache.kafka.connect.transforms.TimestampRouter
 org.apache.kafka.connect.transforms.ValueToKey
+com.cloudera.dim.kafka.connect.transforms.ConvertFromBytes$Key
+com.cloudera.dim.kafka.connect.transforms.ConvertFromBytes$Value
+com.cloudera.dim.kafka.connect.transforms.ConvertToBytes$Key
+com.cloudera.dim.kafka.connect.transforms.ConvertToBytes$Value

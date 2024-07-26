@@ -3149,6 +3149,7 @@ project(':connect:transforms') {
     implementation libs.slf4jApi
 
     testImplementation libs.junitJupiter
+    testImplementation libs.mockitoCore
 
     testRuntimeOnly libs.slf4jReload4j
     testRuntimeOnly libs.junitPlatformLanucher
