@@ -55,6 +55,7 @@ public class MirrorSourceMetricsTest {
 
     @Test
     public void testTags() {
+        configs.put(MirrorSourceConfig.ADD_SOURCE_ALIAS_TO_METRICS, "false");
         MirrorSourceTaskConfig taskConfig = new MirrorSourceTaskConfig(configs);
         MirrorSourceMetrics metrics = new MirrorSourceMetrics(taskConfig);
         metrics.addReporter(reporter);
@@ -70,7 +71,6 @@ public class MirrorSourceMetricsTest {
 
     @Test
     public void testTagsWithSourceAlias() {
-        configs.put(MirrorSourceConfig.ADD_SOURCE_ALIAS_TO_METRICS, "true");
         MirrorSourceTaskConfig taskConfig = new MirrorSourceTaskConfig(configs);
         MirrorSourceMetrics metrics = new MirrorSourceMetrics(taskConfig);
         metrics.addReporter(reporter);
