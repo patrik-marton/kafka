@@ -65,7 +65,7 @@ public class MirrorCheckpointConfig extends MirrorConnectorConfig {
 
     public static final String SYNC_GROUP_OFFSETS_ENABLED = SYNC_GROUP_OFFSETS + ENABLED_SUFFIX;
     private static final String SYNC_GROUP_OFFSETS_ENABLED_DOC = "Whether to periodically write the translated offsets to __consumer_offsets topic in target cluster, as long as no active consumers in that group are connected to the target cluster";
-    public static final boolean SYNC_GROUP_OFFSETS_ENABLED_DEFAULT = false;
+    public static final boolean SYNC_GROUP_OFFSETS_ENABLED_DEFAULT = true;
     public static final String SYNC_GROUP_OFFSETS_INTERVAL_SECONDS = SYNC_GROUP_OFFSETS + INTERVAL_SECONDS_SUFFIX;
     private static final String SYNC_GROUP_OFFSETS_INTERVAL_SECONDS_DOC = "Frequency of consumer group offset sync.";
     public static final long SYNC_GROUP_OFFSETS_INTERVAL_SECONDS_DEFAULT = 60;
