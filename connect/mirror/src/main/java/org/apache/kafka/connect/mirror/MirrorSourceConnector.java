@@ -106,6 +106,7 @@ public class MirrorSourceConnector extends SourceConnector {
     private int replicationFactor;
     private Admin sourceAdminClient;
     private Admin targetAdminClient;
+    private boolean heartbeatsReplicationEnabled;
     private volatile boolean useIncrementalAlterConfigs;
 
     public MirrorSourceConnector() {
@@ -121,10 +122,17 @@ public class MirrorSourceConnector extends SourceConnector {
     // visible for testing
     MirrorSourceConnector(SourceAndTarget sourceAndTarget, ReplicationPolicy replicationPolicy,
             TopicFilter topicFilter, ConfigPropertyFilter configPropertyFilter) {
+        this(sourceAndTarget, replicationPolicy, topicFilter, configPropertyFilter, true);
+    }
+
+    // visible for testing
+    MirrorSourceConnector(SourceAndTarget sourceAndTarget, ReplicationPolicy replicationPolicy,
+            TopicFilter topicFilter, ConfigPropertyFilter configPropertyFilter, boolean heartbeatsReplicationEnabled) {
         this.sourceAndTarget = sourceAndTarget;
         this.replicationPolicy = replicationPolicy;
         this.topicFilter = topicFilter;
         this.configPropertyFilter = configPropertyFilter;
+        this.heartbeatsReplicationEnabled = heartbeatsReplicationEnabled;
     }
 
     // visible for testing the deprecated setting "use.incremental.alter.configs"
@@ -136,9 +144,9 @@ public class MirrorSourceConnector extends SourceConnector {
         this.configPropertyFilter = configPropertyFilter;
         this.config = config;
         this.useIncrementalAlterConfigs = !config.useIncrementalAlterConfigs().equals(MirrorSourceConfig.NEVER_USE_INCREMENTAL_ALTER_CONFIGS);
-        this.targetAdminClient = targetAdmin;                      
+        this.targetAdminClient = targetAdmin;
     }
-        
+
     // visible for testing
     MirrorSourceConnector(Admin sourceAdminClient, Admin targetAdminClient, MirrorSourceConfig config) {
         this.sourceAdminClient = sourceAdminClient;
@@ -162,7 +170,7 @@ public class MirrorSourceConnector extends SourceConnector {
         sourceAdminClient = config.forwardingAdmin(config.sourceAdminConfig("replication-source-admin"));
         targetAdminClient = config.forwardingAdmin(config.targetAdminConfig("replication-target-admin"));
         useIncrementalAlterConfigs =  !config.useIncrementalAlterConfigs().equals(MirrorSourceConfig.NEVER_USE_INCREMENTAL_ALTER_CONFIGS);
-
+        heartbeatsReplicationEnabled = config.heartbeatsReplicationEnabled();
         scheduler = new Scheduler(getClass(), config.entityLabel(), config.adminTimeout());
         scheduler.execute(this::createOffsetSyncsTopic, "creating upstream offset-syncs topic");
         scheduler.execute(this::loadTopicPartitions, "loading initial set of topic-partitions");
@@ -737,7 +745,8 @@ public class MirrorSourceConnector extends SourceConnector {
     }
 
     boolean shouldReplicateTopic(String topic) {
-        return (topicFilter.shouldReplicateTopic(topic) || replicationPolicy.isHeartbeatsTopic(topic))
+        return (topicFilter.shouldReplicateTopic(topic)
+                || (heartbeatsReplicationEnabled && replicationPolicy.isHeartbeatsTopic(topic)))
             && !replicationPolicy.isInternalTopic(topic) && !isCycle(topic);
     }
 

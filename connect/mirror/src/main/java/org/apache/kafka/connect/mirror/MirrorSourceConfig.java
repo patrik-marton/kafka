@@ -104,6 +104,12 @@ public class MirrorSourceConfig extends MirrorConnectorConfig {
     private static final String OFFSET_LAG_MAX_DOC = "How out-of-sync a remote partition can be before it is resynced.";
     public static final long OFFSET_LAG_MAX_DEFAULT = 100L;
 
+    public static final String HEARTBEATS_REPLICATION_ENABLED = "heartbeats.replication" + ENABLED_SUFFIX;
+    private static final String HEARTBEATS_REPLICATION_ENABLED_DOC = "Whether to replicate the heartbeats topics even when the topic filter does not include them." +
+        " If set to true, heartbeats topics identified by the replication policy will always be replicated, regardless of the topic filter configuration." +
+        " If set to false, heartbeats topics will only be replicated if the topic filter allows.";
+    public static final boolean HEARTBEATS_REPLICATION_ENABLED_DEFAULT = true;
+
     public static final String ADD_SOURCE_ALIAS_TO_METRICS = "add.source.alias.to.metrics";
     private static final String ADD_SOURCE_ALIAS_TO_METRICS_DOC = "Deprecated. Whether to tag metrics with the source cluster alias. "
         + "Metrics have the target, topic and partition tags. When this setting is enabled, it adds the source tag. "
@@ -222,6 +228,10 @@ public class MirrorSourceConfig extends MirrorConnectorConfig {
 
     boolean emitOffsetSyncsEnabled() {
         return getBoolean(EMIT_OFFSET_SYNCS_ENABLED);
+    }
+
+    boolean heartbeatsReplicationEnabled() {
+        return getBoolean(HEARTBEATS_REPLICATION_ENABLED);
     }
 
     private static ConfigDef defineSourceConfig(ConfigDef baseConfig) {
@@ -354,6 +364,13 @@ public class MirrorSourceConfig extends MirrorConnectorConfig {
                         EMIT_OFFSET_SYNCS_ENABLED_DEFAULT,
                         ConfigDef.Importance.LOW,
                         EMIT_OFFSET_SYNCS_ENABLED_DOC
+                )
+                .define(
+                        HEARTBEATS_REPLICATION_ENABLED,
+                        ConfigDef.Type.BOOLEAN,
+                        HEARTBEATS_REPLICATION_ENABLED_DEFAULT,
+                        ConfigDef.Importance.LOW,
+                        HEARTBEATS_REPLICATION_ENABLED_DOC
                 );
     }
 
