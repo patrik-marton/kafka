@@ -64,6 +64,7 @@ def main():
             -
             Job: {job}
             Error: {e}""")
+        sys.exit(1)
 
     try:
         result = wait_for_build_finish(build, start_time, timeout, poll_interval)
@@ -73,6 +74,8 @@ def main():
             Job: {job}
             Url: {build.url}
             Result: {result}""")
+        if result in ('ABORTED', 'FAILURE'):
+            sys.exit(1)
     except Exception as e:
         github_comment(gh, repo_name, pr_id, f"""\
             Failed waiting for Jenkins job
@@ -80,6 +83,7 @@ def main():
             Job: {job}
             Url: {build.url}
             Error: {e}""")
+        sys.exit(1)
 
 
 def github_comment(gh, repo_name, pr_id, message):
