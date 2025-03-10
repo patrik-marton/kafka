@@ -108,7 +108,10 @@ def wait_for_build_start(queue_item, start_time, timeout, poll_interval):
 def wait_for_build_finish(build, start_time, timeout, poll_interval):
     while time() - start_time < timeout:
         logging.info('Waiting for build to finish...')
-        result = build.result
+        try:
+            result = build.result
+        except Exception as e:
+            logging.error(f"Got exception while querying jenkins, ignoring. Exception: {e}")
 
         # UNSTABLE status means successful for kafka
         # because it uses retry gradle plugin which makes the build unstable in case there were failure but the retry succeeded.
