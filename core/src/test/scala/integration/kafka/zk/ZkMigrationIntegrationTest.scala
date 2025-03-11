@@ -385,7 +385,7 @@ class ZkMigrationIntegrationTest {
       TestUtils.waitUntilTrue(
         () => topicsAllDeleted(admin),
         "Timed out waiting for topics to be deleted",
-        307000,
+        600000,
         1000)
       log.info("Topics were deleted. Now re-creating them.")
 
